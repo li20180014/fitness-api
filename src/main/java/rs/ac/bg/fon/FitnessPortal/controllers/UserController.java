@@ -32,6 +32,12 @@ public class UserController {
         return ResponseEntity.ok(userService.get(email));
     }
 
+    @GetMapping("/profile/{email}")
+    public ResponseEntity<UserProfileGetDto> getWithProfile(@PathVariable String email, Authentication auth){
+        if(!isLoggedInUser(auth, email)) throw new InvalidUserException();
+        return ResponseEntity.ok(userService.getWithProfile(email));
+    }
+
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping
@@ -49,6 +55,11 @@ public class UserController {
         return ResponseEntity.ok(userService.update(userPutDto));
     }
 
+    @PutMapping("/profile/{email}")
+    public ResponseEntity<UserProfileGetDto> updateWithProfile(@PathVariable String email, @RequestBody @Valid UserProfilePutDto profilePutDto, Authentication auth){
+        if(!isLoggedInUser(auth, email)) throw new InvalidUserException();
+        return ResponseEntity.ok(userService.updateWithProfile(email, profilePutDto));
+    }
 
     @DeleteMapping("/{email}")
     public ResponseEntity<Void> delete(@PathVariable String email, Authentication auth){

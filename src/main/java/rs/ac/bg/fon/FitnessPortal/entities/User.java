@@ -38,6 +38,9 @@ public class User {
             inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles = new HashSet<>();
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private UserProfileInformation userProfileInformation;
+
 
     public User() { }
 
@@ -116,5 +119,12 @@ public class User {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public UserProfileInformation getUserProfileInformation() {
+        return userProfileInformation;
+    }
+    public void setUserProfileInformation(UserProfileInformation userProfileInformation) {
+        this.userProfileInformation = userProfileInformation;
     }
 }
