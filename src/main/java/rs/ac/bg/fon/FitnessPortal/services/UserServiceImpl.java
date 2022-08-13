@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import rs.ac.bg.fon.FitnessPortal.dtos.user.*;
 import rs.ac.bg.fon.FitnessPortal.entities.User;
+import rs.ac.bg.fon.FitnessPortal.entities.UserProfileInformation;
 import rs.ac.bg.fon.FitnessPortal.exception_handling.AdminCannotBeModifiedException;
 import rs.ac.bg.fon.FitnessPortal.exception_handling.EmailExistsException;
 import rs.ac.bg.fon.FitnessPortal.exception_handling.UserNotFoundException;
@@ -63,6 +64,41 @@ public class UserServiceImpl implements UserService{
         return userMapper.userToUserGetDto(userRepository.save(user));
     }
 
+    @Override
+    public UserProfileGetDto getWithProfile(String email) {
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
+
+        UserProfileGetDto userProfileGetDto = userMapper.userToUserProfileGetDto(user);
+
+        if(user.getUserProfileInformation() != null) fillProfileInfo(userProfileGetDto, user.getUserProfileInformation());
+
+        return userProfileGetDto;
+    }
+
+    @Override
+    @Transactional
+    public UserProfileGetDto updateWithProfile(String email, UserProfilePutDto profilePutDto) {
+        if(email.equals(initialAdminConfig.getEmail())) throw new AdminCannotBeModifiedException();
+
+        User user = userRepository.findByEmail(email).orElseThrow(() -> new UserNotFoundException(email));
+
+        userMapper.updateWithProfile(profilePutDto, user);
+        if(profilePutDto.getPassword() != null) userConfigurer.encodePassword(user);
+
+        if(user.getUserProfileInformation() == null) {
+            createNewProfileInfo(user, profilePutDto);
+        }else {
+            updateExistingProfileInfo(user, profilePutDto);
+        }
+
+        UserProfileGetDto userProfileGetDto = userMapper.userToUserProfileGetDto(user);
+
+        if(user.getUserProfileInformation() != null) fillProfileInfo(userProfileGetDto, user.getUserProfileInformation());
+
+        userRepository.save(user);
+
+        return userProfileGetDto;    }
+
 
     @Override
     @Transactional
@@ -93,4 +129,28 @@ public class UserServiceImpl implements UserService{
     public void setUserConfigurer(UserConfigurer userConfigurer) {
         this.userConfigurer = userConfigurer;
     }
+
+    private void fillProfileInfo(UserProfileGetDto userProfileGetDto, UserProfileInformation userProfileInformation) {
+        userProfileGetDto.setAge(userProfileInformation.getAge());
+        userProfileGetDto.setGender(userProfileInformation.getGender());
+        userProfileGetDto.setHeight(userProfileInformation.getHeight());
+        userProfileGetDto.setWeight(userProfileInformation.getWeight());
+    }
+
+    private void updateExistingProfileInfo(User user, UserProfilePutDto profilePutDto) {
+        UserProfileInformation profileInfo = user.getUserProfileInformation();
+
+        if (profilePutDto.getHeight() != null) profileInfo.setHeight(profilePutDto.getHeight());
+        if (profilePutDto.getWeight() != null) profileInfo.setWeight(profilePutDto.getWeight());
+        if (profilePutDto.getAge() != null) profileInfo.setAge(profilePutDto.getAge());
+        if (profilePutDto.getGender() != null) profileInfo.setGender(profilePutDto.getGender());
+    }
+
+    private void createNewProfileInfo(User user, UserProfilePutDto profilePutDto) {
+        UserProfileInformation profileInfo =
+                new UserProfileInformation(profilePutDto.getHeight(), profilePutDto.getWeight(), profilePutDto.getAge(), profilePutDto.getGender());
+
+        profileInfo.setUser(user);
+    }
+
 }
