@@ -6,6 +6,7 @@ import org.mapstruct.MappingTarget;
 import org.mapstruct.NullValuePropertyMappingStrategy;
 import org.springframework.stereotype.Component;
 import rs.ac.bg.fon.FitnessPortal.dtos.user.*;
+import rs.ac.bg.fon.FitnessPortal.entities.Member;
 import rs.ac.bg.fon.FitnessPortal.entities.User;
 import rs.ac.bg.fon.FitnessPortal.security.authentication.MyUserDetails;
 
@@ -27,4 +28,7 @@ public interface UserMapper {
 
     @Mapping(target = "username", source = "email")
     MyUserDetails userToMyUserDetails(User user);
+
+    Member userPostDtoToMember(UserPostDto userPostDto);
+
 }
