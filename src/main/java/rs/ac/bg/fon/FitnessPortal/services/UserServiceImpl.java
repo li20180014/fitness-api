@@ -97,7 +97,8 @@ public class UserServiceImpl implements UserService{
 
         userRepository.save(user);
 
-        return userProfileGetDto;    }
+        return userProfileGetDto;
+    }
 
 
     @Override
