@@ -12,9 +12,7 @@ import rs.ac.bg.fon.FitnessPortal.entities.UserProfileInformation;
 import rs.ac.bg.fon.FitnessPortal.exception_handling.AdminCannotBeModifiedException;
 import rs.ac.bg.fon.FitnessPortal.exception_handling.EmailExistsException;
 import rs.ac.bg.fon.FitnessPortal.exception_handling.UserNotFoundException;
-import rs.ac.bg.fon.FitnessPortal.mapstruct.mappers.UserMapper;
 import rs.ac.bg.fon.FitnessPortal.mapstruct.mappers.UserMapperImpl;
-import rs.ac.bg.fon.FitnessPortal.repositories.RoleRepository;
 import rs.ac.bg.fon.FitnessPortal.repositories.UserRepository;
 import rs.ac.bg.fon.FitnessPortal.security.authorization.ApplicationUserRole;
 import rs.ac.bg.fon.FitnessPortal.security.configuration.InitialAdminConfiguration;
@@ -23,8 +21,7 @@ import rs.ac.bg.fon.FitnessPortal.services.utility.UserConfigurer;
 import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.BDDMockito.given;
+
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.*;
 
@@ -48,14 +45,17 @@ class UserServiceImplTest {
     @Mock
     private UserConfigurer userConfigurer;
 
+    User user;
+
     @BeforeEach
     void setUp() {
+         user = new User(1, "Lana", "Ilic", "lana.ilic99@gmail.com", "123");
 
     }
 
     @AfterEach
     void tearDown() {
-
+    user = null;
     }
 
 
@@ -78,7 +78,6 @@ class UserServiceImplTest {
 
     @Test
     void getByEmailShouldReturnUserByEmail(){
-        User user = new User(1, "Lana", "Ilic", "lana@gmail.com", "123");
 
         when(userRepository.findByEmail(user.getEmail())).thenReturn(Optional.of(user));
 
@@ -157,7 +156,6 @@ class UserServiceImplTest {
     @Test
     void updateByNameShouldUpdateSomeFieldsOfUserIncludingPassword(){
         UserPutDto newUser = new UserPutDto("Iva", null, "lana@gmail.com", "jfnsf", null);
-        User user = new User(1, "Lana", "Ilic", "lana@gmail.com", "123");
 
         when(userRepository.findByEmail(newUser.getEmail())).thenReturn(Optional.of(user));
 
@@ -185,7 +183,6 @@ class UserServiceImplTest {
     @Test
     void updateByNameShouldUpdateSomeFieldsOfUserExcludingPassword(){
         UserPutDto newUser = new UserPutDto("Iva", null, "lana@gmail.com", null, null);
-        User user = new User(1, "Lana", "Ilic", "lana@gmail.com", "123");
 
         when(userRepository.findByEmail(newUser.getEmail())).thenReturn(Optional.of(user));
         when(userRepository.save(user)).thenReturn(user);
@@ -221,7 +218,6 @@ class UserServiceImplTest {
 
     @Test
     void getWithProfileShouldReturn() {
-        User user = new User(1, "Lana", "Ilic", "lana@gmail.com", "123");
 
         when(userRepository.findByEmail("lana.ilic99@gmail.com")).thenReturn(Optional.of(user));
 
@@ -269,40 +265,27 @@ class UserServiceImplTest {
         });
     }
 
-//    @Test
-//    void willUpdateWithProfile(){
-//        User user = new User(1, "Lana", "Ilic", "lana@gmail.com", "123");
-//
-//        when(userRepository.findByEmail("lana.ilic99@gmail.com")).thenReturn(Optional.of(user));
-//
-//        UserProfileInformation upi = new UserProfileInformation(165, 57, 23, Gender.FEMALE);
-//        user.setUserProfileInformation(upi);
-//
-//        UserProfilePutDto userProfilePutDto = new UserProfilePutDto();
-//        userProfileGetDto.setAge(upi.getAge());
-//        userProfileGetDto.setHeight(upi.getHeight());
-//        userProfileGetDto.setWeight(upi.getWeight());
-//        userProfileGetDto.setGender(upi.getGender());
-//
-//        UserProfileGetDto userWithProfile = userService.getWithProfile("lana.ilic99@gmail.com");
-//        assertThat(userWithProfile).usingRecursiveComparison().isEqualTo(userProfileGetDto);
-//    }
+    @Test
+    void willUpdateWithProfile(){
+        when(userRepository.findByEmail("lana.ilic99@gmail.com")).thenReturn(Optional.of(user));
 
-//     userMapper.updateWithProfile(profilePutDto, user);
-//        if(profilePutDto.getPassword() != null) userConfigurer.encodePassword(user);
-//
-//        if(user.getUserProfileInformation() == null) {
-//        createNewProfileInfo(user, profilePutDto);
-//    }else {
-//        updateExistingProfileInfo(user, profilePutDto);
-//    }
-//    UserProfileGetDto userProfileGetDto = userMapper.userToUserProfileGetDto(user);
-//
-//        if(user.getUserProfileInformation() != null) fillProfileInfo(userProfileGetDto, user.getUserProfileInformation());
-//
-//        userRepository.save(user);
-//
-//        return userProfileGetDto;
+        UserProfilePutDto profilePutDto = new UserProfilePutDto("Lana", "Ilic", null, 160, 55, 23, Gender.FEMALE);
+
+        UserProfileInformation upi = new UserProfileInformation(165, 57, 23, Gender.FEMALE);
+        user.setUserProfileInformation(upi);
+
+        UserProfileGetDto userProfileGetDtoExpected = userMapper.userToUserProfileGetDto(user);
+        userProfileGetDtoExpected.setGender(Gender.FEMALE);
+        userProfileGetDtoExpected.setAge(23);
+        userProfileGetDtoExpected.setWeight(55);
+        userProfileGetDtoExpected.setHeight(160);
+
+
+        UserProfileGetDto userProfileGetDto = userService.updateWithProfile("lana.ilic99@gmail.com", profilePutDto);
+
+        assertThat(userProfileGetDtoExpected).usingRecursiveComparison().isEqualTo(userProfileGetDto);
+    }
+
 
     @Test
     void deleteByEmailShouldDeleteUser(){
