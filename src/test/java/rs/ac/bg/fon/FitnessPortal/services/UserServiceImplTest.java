@@ -286,6 +286,24 @@ class UserServiceImplTest {
         assertThat(userProfileGetDtoExpected).usingRecursiveComparison().isEqualTo(userProfileGetDto);
     }
 
+    @Test
+    void willUpdateWithProfileCreateNewProfile(){
+        when(userRepository.findByEmail("lana.ilic99@gmail.com")).thenReturn(Optional.of(user));
+
+        UserProfilePutDto profilePutDto = new UserProfilePutDto("Lana", "Ilic", null, 160, 55, 23, Gender.FEMALE);
+
+        UserProfileGetDto userProfileGetDtoExpected = userMapper.userToUserProfileGetDto(user);
+        userProfileGetDtoExpected.setGender(Gender.FEMALE);
+        userProfileGetDtoExpected.setAge(23);
+        userProfileGetDtoExpected.setWeight(55);
+        userProfileGetDtoExpected.setHeight(160);
+
+
+        UserProfileGetDto userProfileGetDto = userService.updateWithProfile("lana.ilic99@gmail.com", profilePutDto);
+
+        assertThat(userProfileGetDtoExpected).usingRecursiveComparison().isEqualTo(userProfileGetDto);
+    }
+
 
     @Test
     void deleteByEmailShouldDeleteUser(){
