@@ -22,16 +22,49 @@ import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
+/**
+ * Represents a service layer class responsible for implementing all Member related API methods.
+ * Available API method implementations: POST
+ *
+ * @author Lana
+ * @version 1.0
+ */
 @Service
 public class MemberServiceImpl implements MemberService{
 
+    /**
+     * Instance of User repository class, responsible for interacting with User database table.
+     */
     private UserRepository userRepository;
+    /**
+     * Instance of Mapstruct Mapper class, responsible for mapping from DTO to DAO and vice versa.
+     */
     private UserMapper userMapper;
+    /**
+     * Instance of Member repository class, responsible for interacting with Member database table.
+     */
     private MemberRepository memberRepository;
+    /**
+     * Instance of User Configurer class, responsible for handling user configurations such as encoding passwords and setting application roles.
+     */
     private UserConfigurer userConfigurer;
+    /**
+     * Instance of JavaMailSender class, responsible for sending emails from specific email address.
+     */
     private JavaMailSender javaMailSender;
 
 
+    /**
+     * Adds new application member to database. Returns instance of saved member from database.
+     *
+     * @param userPostDto instance of UserPostDto class with new member data for inserting.
+     * @param roleTypes list of ApplicationUserRoles.
+     * @param siteURL string value of application site url.
+     * @return UserGetDto instance of saved member in database.
+     * @throws MessagingException The base class for all exceptions thrown by the Messaging classes.
+     * @throws UnsupportedEncodingException The Character Encoding is not supported.
+     * @throws EmailExistsException if member with provided email already exists in database.
+     */
     @Override
     @Transactional
     public UserGetDto create(UserPostDto userPostDto, List<ApplicationUserRole> roleTypes, String siteURL) throws MessagingException, UnsupportedEncodingException {
@@ -52,6 +85,14 @@ public class MemberServiceImpl implements MemberService{
         return userMapper.userToUserGetDto(member);
     }
 
+    /**
+     * Method responsible for sending verification emails to new users from server.
+     *
+     * @param user instance of User class to whom the mail should be sent to.
+     * @param siteURL string value of application site url.
+     * @throws MessagingException The base class for all exceptions thrown by the Messaging classes.
+     * @throws UnsupportedEncodingException The Character Encoding is not supported.
+     */
     private void sendVerificationEmail(Member user, String siteURL) throws MessagingException, UnsupportedEncodingException {
         String toAddress = user.getEmail();
         String fromAddress = "lana.ilic99@gmail.com";
@@ -80,6 +121,11 @@ public class MemberServiceImpl implements MemberService{
         javaMailSender.send(message);
     }
 
+    /**
+     * Method responsible for verifying a new User account.
+     *
+     * @param verificationCode string value of a User's verification code.
+     */
     public void verify(String verificationCode){
         Member member = memberRepository.findByVerificationCode(verificationCode);
 
@@ -90,27 +136,50 @@ public class MemberServiceImpl implements MemberService{
         memberRepository.save(member);
     }
 
-
+    /**
+     * Sets user repository to provided instance of UserRepository class.
+     *
+     * @param userRepository new Object instance of UserRepository class.
+     */
     @Autowired
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
-
+    /**
+     * Sets user mapper to provided instance of UserMapper class.
+     *
+     * @param userMapper new Object instance of mapstruct UserMapper class.
+     */
     @Autowired
     public void setUserMapper(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
 
+    /**
+     * Sets  member repository to provided instance of MemberRepository class.
+     *
+     * @param memberRepository new Object instance of MemberRepository class.
+     */
     @Autowired
     public void setMemberRepository(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;
     }
 
+    /**
+     * Sets user configurer to provided instance of UserConfigurer class.
+     *
+     * @param userConfigurer new Object instance of UserConfigurer class.
+     */
     @Autowired
     public void setUserConfigurer(UserConfigurer userConfigurer) {
         this.userConfigurer = userConfigurer;
     }
 
+    /**
+     * Sets java mail sender to provided instance of JavaMailSender class.
+     *
+     * @param javaMailSender new Object instance of JavaMailSender class.
+     */
     @Autowired
     public void setJavaMailSender(JavaMailSender javaMailSender) {
         this.javaMailSender = javaMailSender;
