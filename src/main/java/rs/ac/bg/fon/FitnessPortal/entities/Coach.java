@@ -80,9 +80,14 @@ public class Coach extends User {
      * Sets the coach's years of experience to entered value.
      *
      * @param yearsOfExperience new integer value for coach's years of experience.
+     * @throws NullPointerException if provided years of experience are null.
      */
     public void setYearsOfExperience(Integer yearsOfExperience) {
-        this.yearsOfExperience = yearsOfExperience;
+
+        if(yearsOfExperience == null)
+            throw new NullPointerException("Years of experience must not be null");
+
+            this.yearsOfExperience = yearsOfExperience;
     }
 
     /**
@@ -97,8 +102,17 @@ public class Coach extends User {
      * Sets the coach's years of experience to entered value.
      *
      * @param imageSrc new string value for coach's image source link.
+     * @throws NullPointerException if provided image source is null.
+     * @throws IllegalArgumentException if provided image source is an empty string.
      */
     public void setImageSrc(String imageSrc) {
+
+        if (imageSrc == null)
+            throw new NullPointerException("Image source must not be null");
+
+        if (imageSrc.isEmpty())
+            throw new IllegalArgumentException("Image source must not be an empty string");
+
         this.imageSrc = imageSrc;
     }
 
@@ -115,8 +129,16 @@ public class Coach extends User {
      * Sets the coach's biography to entered value.
      *
      * @param biography new string value for coach's biography.
+     * @throws NullPointerException if provided biography is null.
+     * @throws IllegalArgumentException if provided biography is an empty string.
      */
     public void setBiography(String biography) {
+        if (biography == null)
+            throw new NullPointerException("Biography must not be null");
+
+        if (biography.isEmpty())
+            throw new IllegalArgumentException("Biography must not be an empty string");
+
         this.biography = biography;
     }
 
@@ -133,8 +155,11 @@ public class Coach extends User {
      * Sets the coach's available trainings to entered values.
      *
      * @param trainings new Set of Trainings for coach's available trainings.
+     * @throws NullPointerException if provided trainings are null.
      */
     public void setTrainings(Set<Training> trainings) {
+        if(trainings == null)
+            throw new NullPointerException("Trainings must not be null");
         this.trainings = trainings;
     }
 }

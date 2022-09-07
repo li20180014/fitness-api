@@ -95,8 +95,12 @@ public class Blog {
      * Sets the blog id to entered value.
      *
      * @param id new integer value of blog id.
+     * @throws NullPointerException if provided id is null.
      */
     public void setId(Integer id) {
+        if(id ==null){
+            throw new NullPointerException("Id can not be null");
+        }
         this.id = id;
     }
 
@@ -113,8 +117,15 @@ public class Blog {
      * Sets the blog title to entered value
      *
      * @param title new string value as blog title.
+     * @throws NullPointerException if provided title is null.
+     * @throws IllegalArgumentException if provided title is an empty string.
      */
     public void setTitle(String title) {
+        if (title == null)
+            throw new NullPointerException("Title must not be null");
+
+        if (title.isEmpty())
+            throw new IllegalArgumentException("Title must not be an empty string");
         this.title = title;
     }
 
@@ -131,8 +142,15 @@ public class Blog {
      * Sets the blog text to entered value.
      *
      * @param text new string value as blog text.
+     * @throws NullPointerException if provided text is null.
+     * @throws IllegalArgumentException if provided text is an empty string.
      */
     public void setText(String text) {
+        if (text == null)
+            throw new NullPointerException("Text must not be null");
+
+        if (text.isEmpty())
+            throw new IllegalArgumentException("Text must not be an empty string");
         this.text = text;
     }
 
@@ -149,8 +167,11 @@ public class Blog {
      * Sets the user who has written the blog to entered value.
      *
      * @param user new object of class User as user.
+     * @throws  NullPointerException if provided user is null.
      */
     public void setUser(User user) {
+        if (user == null)
+            throw new NullPointerException("User must not be null");
         this.user = user;
     }
 
@@ -167,8 +188,11 @@ public class Blog {
      * Sets blog type to entered value.
      *
      * @param type new value of enum BlogType as type.
+     * @throws NullPointerException if provided blog type is null.
      */
     public void setType(BlogType type) {
+        if (type == null)
+            throw new NullPointerException("Blog type must not be null");
         this.type = type;
     }
 
@@ -185,8 +209,15 @@ public class Blog {
      * Sets the blogs image source to entered link.
      *
      * @param imageSrc new string value as image source.
+     * @throws NullPointerException if provided image source is null.
+     * @throws IllegalArgumentException if provided image source is an empty string.
      */
     public void setImageSrc(String imageSrc) {
+        if (imageSrc == null)
+            throw new NullPointerException("Image source must not be null");
+
+        if (imageSrc.isEmpty())
+            throw new IllegalArgumentException("Image source must not be an empty string");
         this.imageSrc = imageSrc;
     }
 }

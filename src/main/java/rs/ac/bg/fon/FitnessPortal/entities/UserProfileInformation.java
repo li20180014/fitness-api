@@ -101,8 +101,12 @@ public class UserProfileInformation {
      * Sets the user profile id to entered value.
      *
      * @param id new integer value for user profile id.
+     * @throws NullPointerException if provided id is null.
      */
     public void setId(Integer id) {
+
+        if(id== null)
+            throw new NullPointerException("Id must not be null");
         this.id = id;
     }
 
@@ -119,10 +123,14 @@ public class UserProfileInformation {
      * Sets the user associated with profile to entered value.
      *
      * @param user new User entity associated with profile.
+     * @throws NullPointerException if provided user is null.
      */
     public void setUser(User user) {
+        if(user== null)
+            throw new NullPointerException("User must not be null");
+
         this.user = user;
-        if(user != null) user.setUserProfileInformation(this);
+        user.setUserProfileInformation(this);
     }
 
     /**
@@ -138,8 +146,11 @@ public class UserProfileInformation {
      * Sets users height to entered value.
      *
      * @param height new integer value for users height.
+     * @throws NullPointerException if provided height is null.
      */
     public void setHeight(Integer height) {
+        if (height == null)
+            throw new NullPointerException("Height must not be null");
         this.height = height;
     }
 
@@ -158,6 +169,9 @@ public class UserProfileInformation {
      * @param weight new integer value for users weight.
      */
     public void setWeight(Integer weight) {
+        if (weight == null)
+            throw new NullPointerException("Weight must not be null");
+
         this.weight = weight;
     }
 
@@ -174,8 +188,11 @@ public class UserProfileInformation {
      * Sets users age to entered value.
      *
      * @param age new integer value for users age.
+     * @throws NullPointerException if provided age is null.
      */
     public void setAge(Integer age) {
+        if (age == null)
+            throw new NullPointerException("Age must not be null");
         this.age = age;
     }
 
@@ -192,8 +209,12 @@ public class UserProfileInformation {
      * Sets users gender to entered value.
      *
      * @param gender new enum value of type Gender for users gender.
+     * @throws  NullPointerException if provided gender is null.
      */
     public void setGender(Gender gender) {
+        if (gender == null)
+            throw new NullPointerException("Gender must not be null");
+
         this.gender = gender;
     }
 }

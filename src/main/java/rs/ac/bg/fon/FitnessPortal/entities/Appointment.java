@@ -70,8 +70,12 @@ public class Appointment {
      * Sets appointment id to entered value.
      *
      * @param id new integer value as id.
+     * @throws NullPointerException if provided id is null.
      */
     public void setId(Integer id) {
+        if (id == null)
+            throw new NullPointerException("Id can not be null");
+
         this.id = id;
     }
 
@@ -88,8 +92,14 @@ public class Appointment {
      * Sets the member of the appointment to entered value.
      *
      * @param member new object of class Member as member.
+     * @throws NullPointerException if provided member instance is null.
      */
     public void setMember(Member member) {
+
+        if (member == null)
+            throw new NullPointerException("Member can not be null");
+
+
         this.member = member;
     }
 
@@ -106,8 +116,14 @@ public class Appointment {
      * Sets the appointments training session to entered value.
      *
      * @param training new object of class Training as the appointments training.
+     * @throws NullPointerException if provided training instance is null.
      */
     public void setTraining(Training training) {
+
+        if (training == null)
+            throw new NullPointerException("Training can not be null");
+
+
         this.training = training;
     }
 
@@ -124,8 +140,12 @@ public class Appointment {
      * Sets attendance to entered value.
      *
      * @param attended new boolean value as attendance.
+     * @throws NullPointerException if provided value for attendance is null.
      */
-    public void setAttended(Boolean attended) {
-        this.attended = attended;
+    public void setAttended(Boolean attended){
+     if (attended == null)
+            throw new NullPointerException("Attendance can not be null");
+
+    this.attended = attended;
     }
 }

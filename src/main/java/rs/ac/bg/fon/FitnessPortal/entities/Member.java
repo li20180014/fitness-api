@@ -59,8 +59,13 @@ public class Member extends User {
      * Sets the member's scheduled appointments to entered value.
      *
      * @param appointments new set of appointments for member's scheduled appointments.
+     * @throws  NullPointerException if provided appointments are null.
      */
     public void setAppointments(Set<Appointment> appointments) {
+
+        if(appointments == null)
+        throw new NullPointerException("Appointments must not be null");
+
         this.appointments = appointments;
     }
 }
