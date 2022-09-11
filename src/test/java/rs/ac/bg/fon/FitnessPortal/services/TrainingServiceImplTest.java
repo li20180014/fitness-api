@@ -116,14 +116,14 @@ class TrainingServiceImplTest {
         when(coachRepository.findByEmail("lana.ilic99@gmail.com")).thenReturn(Optional.of(coach));
 
         TrainingPostDto trainingPostDto = new TrainingPostDto();
-        trainingPostDto.setDate( LocalDate.of(2022, 9, 4));
+        trainingPostDto.setDate( LocalDate.of(2022, 11, 4));
         trainingPostDto.setStartTime(LocalTime.of(15,0,0));
         trainingPostDto.setEndTime(LocalTime.of(16,0,0));
         trainingPostDto.setMaxSpots(5);
 
 
         Training t = new Training();
-        t.setDate( LocalDate.of(2022, 9, 4));
+        t.setDate( LocalDate.of(2022, 11, 4));
         t.setStartTime(LocalTime.of(17,0,0));
         t.setEndTime(LocalTime.of(18,0,0));
         when(trainingRepository.findAllByDateAndCoach(trainingPostDto.getDate(), coach)).thenReturn(List.of(t));
@@ -150,12 +150,12 @@ class TrainingServiceImplTest {
         when(coachRepository.findByEmail("lana.ilic99@gmail.com")).thenReturn(Optional.of(coach));
 
         TrainingPostDto trainingPostDto = new TrainingPostDto();
-        trainingPostDto.setDate( LocalDate.of(2022, 9, 4));
+        trainingPostDto.setDate( LocalDate.of(2022, 11, 4));
         trainingPostDto.setStartTime(LocalTime.of(15,0,0));
         trainingPostDto.setEndTime(LocalTime.of(16,0,0));
 
         Training t = new Training();
-        t.setDate( LocalDate.of(2022, 9, 4));
+        t.setDate( LocalDate.of(2022, 11, 4));
         t.setStartTime(LocalTime.of(17,0,0));
         t.setEndTime(LocalTime.of(18,0,0));
         when(trainingRepository.findAllByDateAndCoach(trainingPostDto.getDate(), coach)).thenReturn(List.of(t));

@@ -94,6 +94,10 @@ class CoachServiceImplTest {
         coachPostDto.setPassword("jsnf");
         coachPostDto.setYearsOfExperience(10);
         coachPostDto.setImageSrc("www.linkedin.com");
+        coachPostDto.setFirstName("Lana");
+        coachPostDto.setLastName("Ilic");
+        coachPostDto.setEmail("email");
+
 
 
         List<ApplicationUserRole> roleTypes = List.of(ApplicationUserRole.COACH);

@@ -270,8 +270,9 @@ class AppointmentServiceImplTest {
 
         Appointment a = new Appointment();
         a.setId(1);
+    a.setAttended(true);
         Training t = new Training();
-        t.setDate(LocalDate.of(2022,9,4));
+        t.setDate(LocalDate.of(2022,11,4));
         t.setStartTime(LocalTime.of(16,0,0));
         Coach c= new Coach();
         c.setEmail("lana.ilic99@gmail.com");
@@ -280,8 +281,10 @@ class AppointmentServiceImplTest {
 
         when(appointmentRepository.findById(a.getId())).thenReturn(Optional.of(a));
 
+        AppointmentAttendancePutDto app = new AppointmentAttendancePutDto();
+        app.setAttended(true);
         Assertions.assertThrows(FutureAppointmentException.class, () -> {
-            appointmentService.updateAttendance(1, new AppointmentAttendancePutDto(), "lana.ilic99@gmail.com");
+            appointmentService.updateAttendance(1, app, "lana.ilic99@gmail.com");
         });
     }
 

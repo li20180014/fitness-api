@@ -85,8 +85,11 @@ public class Training {
      * Sets the id to entered value.
      *
      * @param id new integer value as id.
+     * @throws NullPointerException if provided id is null.
      */
     public void setId(Integer id) {
+        if(id==null) throw new NullPointerException("Id must not be null");
+
         this.id = id;
     }
 
@@ -103,8 +106,10 @@ public class Training {
      * Sets the date to entered value.
      *
      * @param date new LocalDate value as date.
+     * @throws NullPointerException if provided Date is null.
      */
     public void setDate(LocalDate date) {
+        if(date==null) throw new NullPointerException("Date must not be null");
         this.date = date;
     }
 
@@ -121,8 +126,11 @@ public class Training {
      * Sets startTime to entered value.
      *
      * @param startTime  new LocalTime value as start time.
+     * @throws NullPointerException if provided start time is null.
      */
     public void setStartTime(LocalTime startTime) {
+
+        if(startTime==null) throw new NullPointerException("Start time must not be null");
         this.startTime = startTime;
     }
 
@@ -139,8 +147,12 @@ public class Training {
      * Sets endTime to entered value.
      *
      * @param endTime new LocalTime value as endTime.
+     * @throws NullPointerException if provided end time is null.
      */
     public void setEndTime(LocalTime endTime) {
+
+        if(endTime==null) throw new NullPointerException("End time must not be null");
+
         this.endTime = endTime;
     }
 
@@ -157,8 +169,12 @@ public class Training {
      * Sets coach to entered value.
      *
      * @param coach new object of class Coach.
+     * @throws NullPointerException if provided coach is null.
      */
     public void setCoach(Coach coach) {
+
+        if(coach==null) throw new NullPointerException("Coach must not be null");
+
         this.coach = coach;
     }
 
@@ -175,8 +191,10 @@ public class Training {
      * Sets max number of spots to entered value.
      *
      * @param maxSpots new integer value as max number of spots.
+     * @throws  NullPointerException if provided max spots are null.
      */
     public void setMaxSpots(Integer maxSpots) {
+        if(maxSpots==null) throw new NullPointerException("Max spots must not be null");
         this.maxSpots = maxSpots;
     }
 
@@ -193,8 +211,11 @@ public class Training {
      * Sets remaining spots to entered value.
      *
      * @param remainingSpots new integer value as number of remaining spots.
+     * @throws NullPointerException if provided remaining spots are null.
      */
     public void setRemainingSpots(Integer remainingSpots) {
+        if(remainingSpots==null) throw new NullPointerException("Remainings spots must not be null");
+
         this.remainingSpots = remainingSpots;
     }
 
@@ -211,8 +232,12 @@ public class Training {
      * Sets appointments to entered values.
      *
      * @param appointments new set of objects of class Appointment.
+     * @throws NullPointerException if provided appointments are null.
      */
     public void setAppointments(Set<Appointment> appointments) {
+
+        if(appointments==null) throw new NullPointerException("Appointments must not be null");
+
         this.appointments = appointments;
     }
 }

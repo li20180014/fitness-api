@@ -58,8 +58,12 @@ public class Role {
      * Sets the application role id to entered value.
      *
      * @param id new integer value for role id.
+     * @throws NullPointerException if provided id is null.
      */
     public void setId(Integer id) {
+
+        if(id==null) throw new NullPointerException("Id must not be null");
+
         this.id = id;
     }
 
@@ -76,8 +80,12 @@ public class Role {
      * Sets application role name to entered value.
      *
      * @param name new  value of type ApplicationUserRole.
+     * @throws NullPointerException if provided  name is null.
      */
     public void setName(ApplicationUserRole name) {
+        if (name == null)
+            throw new NullPointerException("Role name must not be null");
+
         this.name = name;
     }
 
@@ -94,8 +102,12 @@ public class Role {
      * Sets users to new entered values.
      *
      * @param users new Set of objects of class User.
+     * @throws  NullPointerException if provided Users are null.
      */
     public void setUsers(Set<User> users) {
+        if (users == null)
+            throw new NullPointerException("Users must not be null");
+
         this.users = users;
     }
 }

@@ -113,8 +113,11 @@ public class User {
      * Sets the User's id to entered value.
      *
      * @param id new integer value for User's id.
+     * @throws NullPointerException if provided id is null.
      */
     public void setId(Integer id) {
+        if(id==null) throw new NullPointerException("Id must not be null");
+
         this.id = id;
     }
 
@@ -131,8 +134,16 @@ public class User {
      * Sets the Users first name to entered value.
      *
      * @param firstName new string value for User's first name.
+     * @throws NullPointerException if provided first name is null.
+     * @throws IllegalArgumentException if provided first name is an empty string.
      */
     public void setFirstName(String firstName) {
+
+        if (firstName == null)
+            throw new NullPointerException("First name must not be null");
+
+        if (firstName.isEmpty())
+            throw new IllegalArgumentException("First name must not be an empty string");
         this.firstName = firstName;
     }
 
@@ -149,8 +160,17 @@ public class User {
      * Sets the Users last name to entered value.
      *
      * @param lastName new string value for User's last name.
+     * @throws NullPointerException if provided last name is null.
+     * @throws IllegalArgumentException if provided last name is an empty string.
      */
     public void setLastName(String lastName) {
+
+
+        if (lastName == null)
+            throw new NullPointerException("Last name must not be null");
+
+        if (lastName.isEmpty())
+            throw new IllegalArgumentException("Last name must not be an empty string");
         this.lastName = lastName;
     }
 
@@ -167,8 +187,16 @@ public class User {
      * Sets the User's email to entered value.
      *
      * @param email new string value for User's email.
+     * @throws NullPointerException if provided email is null.
+     * @throws IllegalArgumentException if provided email is an empty string.
      */
     public void setEmail(String email) {
+        if (email == null)
+            throw new NullPointerException("Email must not be null");
+
+        if (email.isEmpty())
+            throw new IllegalArgumentException("Email must not be an empty string");
+
         this.email = email;
     }
 
@@ -185,8 +213,16 @@ public class User {
      * Sets the User's password to new entered value.
      *
      * @param password new string value for User's password.
+     * @throws NullPointerException if provided password is null.
+     * @throws IllegalArgumentException if provided password is an empty string.
      */
     public void setPassword(String password) {
+        if (password == null)
+            throw new NullPointerException("Password must not be null");
+
+        if (password.isEmpty())
+            throw new IllegalArgumentException("Password must not be an empty string");
+
         this.password = password;
     }
 
@@ -203,8 +239,12 @@ public class User {
      * Sets the User roles to new entered values.
      *
      * @param roles new Set of Role values User application roles.
+     * @throws NullPointerException if provided roles are null.
      */
     public void setRoles(Set<Role> roles) {
+        if (roles == null)
+            throw new NullPointerException("Application roles must not be null");
+
         this.roles = roles;
     }
 
@@ -249,8 +289,12 @@ public class User {
      * Sets User's account to new value for enabled field.
      *
      * @param enabled new boolean value for enabled field.
+     * @throws NullPointerException if provided value is null.
      */
     public void setEnabled(Boolean enabled) {
+
+        if (enabled == null) throw new NullPointerException("Provided value must not be null");
+
         this.enabled = enabled;
     }
 
@@ -267,8 +311,11 @@ public class User {
      * Sets User profile information to new Object value containing profile information.
      *
      * @param userProfileInformation new Object value containing User profile information.
+     *  @throws  NullPointerException if provided profile information is null.
      */
     public void setUserProfileInformation(UserProfileInformation userProfileInformation) {
+        if (userProfileInformation == null) throw new NullPointerException("Provided profile information must not be null");
+
         this.userProfileInformation = userProfileInformation;
     }
 }

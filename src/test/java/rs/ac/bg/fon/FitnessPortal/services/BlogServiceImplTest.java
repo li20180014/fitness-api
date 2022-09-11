@@ -87,7 +87,7 @@ class BlogServiceImplTest {
         when(userRepository.findByEmail("lana.ilic99@gmail.com")).thenReturn(Optional.empty());
 
         Assertions.assertThrows(UserNotFoundException.class, () -> {
-            blogService.create(new BlogPostDto(), "lana.ilic99@gmail.com");
+            blogService.create(null, "lana.ilic99@gmail.com");
         });
     }
 
